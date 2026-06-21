@@ -1,6 +1,37 @@
 import { useEffect, useState } from 'react'
 import api from '../api/axios'
 
+// 1. Your official projects array with your live deployed links!
+const BACKUP_SEED_PROJECTS = [
+  {
+    _id: 'backup-1',
+    title: 'Smart Public Issue Reporting System',
+    description: 'A full-stack civic tech platform for 3 user roles (citizen, officer, admin) with real-time complaint tracking across 5 status stages. Features Cloudinary image uploads, JWT auth, Google Maps integration, and Recharts dashboards.',
+    techStack: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'JWT', 'Cloudinary', 'Google Maps API', 'Recharts'],
+    liveLink: 'https://pprs-6.onrender.com',
+    githubLink: 'https://github.com/praveen-analyze/pprs.git',
+    featured: true,
+  },
+  {
+    _id: 'backup-2',
+    title: 'Pizza Palace – Food Ordering Platform',
+    description: 'Full-stack online food ordering platform with cart management, order tracking, and Razorpay payment gateway. Deployed live on Vercel (frontend) and Render (backend) with Firebase Auth and MongoDB Atlas.',
+    techStack: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'Firebase', 'Razorpay', 'Vercel', 'Render'],
+    liveLink: 'https://pizza-itf6.vercel.app/',
+    githubLink: 'https://github.com/praveen-analyze/pizza.git',
+    featured: true,
+  },
+  {
+    _id: 'backup-3',
+    title: 'Bulk Email Application',
+    description: 'MERN stack bulk email platform with JWT auth, Nodemailer integration, per-recipient delivery tracking, and a Tiptap WYSIWYG editor. Dark-themed UI with real-time send status.',
+    techStack: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'JWT', 'Nodemailer', 'Tiptap'],
+    liveLink: '', // Add live link here if you deploy it later
+    githubLink: 'https://github.com/praveen-analyze',
+    featured: false,
+  }
+];
+
 function ProjectCard({ project }) {
   return (
     <div className="group relative p-6 rounded-2xl bg-brand-card border border-brand-border card-hover flex flex-col h-full">
@@ -62,8 +93,17 @@ export default function Projects() {
 
   useEffect(() => {
     api.get('/projects')
-      .then(res => setProjects(res.data))
-      .catch(err => console.error(err))
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          setProjects(res.data)
+        } else {
+          setProjects(BACKUP_SEED_PROJECTS)
+        }
+      })
+      .catch(err => {
+        console.error("API failed, loading static backups instead:", err)
+        setProjects(BACKUP_SEED_PROJECTS)
+      })
       .finally(() => setLoading(false))
   }, [])
 
@@ -120,7 +160,7 @@ export default function Projects() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(project => (
-              <ProjectCard key={project._id} project={project} />
+              <ProjectCard key={project._id || project.title} project={project} />
             ))}
           </div>
         )}
