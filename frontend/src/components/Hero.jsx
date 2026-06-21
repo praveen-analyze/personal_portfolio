@@ -92,8 +92,8 @@ export default function Hero() {
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
           {[
             { value: '8.2', label: 'CGPA', sub: 'Annamalai University' },
-            { value: '3+', label: 'Projects', sub: 'Deployed & Live' },
-            { value: '25+', label: 'APIs', sub: 'Built & Tested' },
+            { value: '10+', label: 'Projects', sub: 'Deployed & Live' },
+            { value: '55+', label: 'APIs', sub: 'Built & Tested' },
             { value: '1', label: 'Internship', sub: 'MERN Stack' },
           ].map(stat => (
             <div key={stat.label} className="text-center">
