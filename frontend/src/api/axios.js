@@ -1,7 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://personal-portfolio-2d24.onrender.com/',
-})
+// This safely looks for the Netlify variable, fallback to placeholder if missing
+const baseURL = import.meta.env.VITE_API_URL || 'https://placeholder.example.com';
 
-export default api
+export default axios.create({ baseURL });
